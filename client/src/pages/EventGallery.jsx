@@ -8,6 +8,8 @@ export default function EventGallery() {
 
   const [media, setMedia] = useState([]);
   const [comments, setComments] = useState({}); // Manage comments per media item
+  const [likes, setLikes] = useState({});
+  const [allComments, setAllComments] = useState({});
 
   useEffect(() => {
     fetchMedia();
@@ -81,6 +83,33 @@ export default function EventGallery() {
   const handleCommentChange = (mediaId, value) => {
     setComments((prev) => ({ ...prev, [mediaId]: value })); // Update the comment for the specific media item
   };
+
+  const fetchInteractions = async () => {
+    const likesObj = {};
+    const commentsObj = {};
+  
+    for (const item of media) {
+      const likesRes = await API.get(
+        `/interactions/likes/${item.id}`
+      );
+  
+      likesObj[item.id] = likesRes.data.count;
+  
+      const commentsRes = await API.get(
+        `/interactions/comment/${item.id}`
+      );
+  
+      commentsObj[item.id] = commentsRes.data;
+    }
+  
+    setLikes(likesObj);
+    setAllComments(commentsObj);
+  };
+  useEffect(() => {
+    if (media.length > 0) {
+      fetchInteractions();
+    }
+  }, [media]);
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -156,7 +185,7 @@ export default function EventGallery() {
                       rounded-lg
                     "
                   >
-                    ❤️ Like
+                    ❤️ {likes[item.id] || 0} Likes
                   </button>
 
                   <div className="mt-4">
@@ -189,6 +218,22 @@ export default function EventGallery() {
                     >
                       Comment
                     </button>
+                    <div className="mt-4">
+  {(allComments[item.id] || []).map((c) => (
+    <div
+      key={c.id}
+      className="border-b py-2"
+    >
+      <p className="font-semibold">
+        {c.name}
+      </p>
+
+      <p className="text-gray-600">
+        {c.comment_text}
+      </p>
+    </div>
+  ))}
+</div>
                   </div>
                 </div>
               </div>

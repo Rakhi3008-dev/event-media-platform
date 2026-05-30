@@ -65,3 +65,22 @@ export const getComments = async (req, res) => {
     });
   }
 };
+export const getLikes = async (req, res) => {
+    try {
+      const { mediaId } = req.params;
+  
+      const result = await pool.query(
+        `SELECT COUNT(*) as count
+         FROM likes
+         WHERE media_id=$1`,
+        [mediaId]
+      );
+  
+      res.json(result.rows[0]);
+  
+    } catch (error) {
+      res.status(500).json({
+        message: error.message,
+      });
+    }
+  };
