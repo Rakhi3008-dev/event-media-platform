@@ -5,6 +5,7 @@ import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import eventRoutes from "./routes/eventRoutes.js";
 import mediaRoutes from "./routes/mediaRoutes.js";
+import interactionRoutes from "./routes/interactionRoutes.js";
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/events", eventRoutes);
 app.use("/uploads", express.static("uploads"));
 app.use("/api/media", mediaRoutes);
+app.use("/api/interactions", interactionRoutes);
 
 app.get("/", (req, res) => {
   res.send("API Running");
