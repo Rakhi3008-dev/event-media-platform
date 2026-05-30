@@ -7,6 +7,7 @@ export default function EventGallery() {
   const { id } = useParams();
 
   const [media, setMedia] = useState([]);
+  const [comments, setComments] = useState({}); // Manage comments per media item
 
   useEffect(() => {
     fetchMedia();
@@ -34,6 +35,53 @@ export default function EventGallery() {
     }
   };
 
+  const likeMedia = async (mediaId) => {
+    try {
+      const token = localStorage.getItem("token");
+
+      await API.post(
+        `/interactions/like/${mediaId}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      alert("Liked ❤️");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const addComment = async (mediaId) => {
+    try {
+      const token = localStorage.getItem("token");
+
+      await API.post(
+        `/interactions/comment/${mediaId}`,
+        {
+          comment: comments[mediaId] || "", // Get the comment for the specific media item
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      setComments((prev) => ({ ...prev, [mediaId]: "" })); // Clear the comment for the specific media item
+      alert("Comment Added 💬");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleCommentChange = (mediaId, value) => {
+    setComments((prev) => ({ ...prev, [mediaId]: value })); // Update the comment for the specific media item
+  };
+
   return (
     <div className="min-h-screen bg-gray-100">
       <div className="text-center py-10">
@@ -56,43 +104,93 @@ export default function EventGallery() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {media.map((item) => (
-              <div key={item.id} className="relative group">
-                <img
-                  src={`https://event-media-platform.onrender.com${item.media_url}`}
-                  alt=""
-                  className="
-                    w-full
-                    h-72
-                    object-cover
-                    rounded-2xl
-                    shadow-md
-                    hover:scale-105
-                    hover:shadow-xl
-                    transition-all
-                    duration-300
-                  "
-                />
+              <div
+                key={item.id}
+                className="bg-white rounded-2xl shadow-md overflow-hidden"
+              >
+                <div className="relative group">
+                  <img
+                    src={`https://event-media-platform.onrender.com${item.media_url}`}
+                    alt=""
+                    className="
+                      w-full
+                      h-72
+                      object-cover
+                      hover:scale-105
+                      transition-all
+                      duration-300
+                    "
+                  />
 
-                <button
-                  onClick={() => handleDelete(item.id)}
-                  className="
-                    absolute
-                    top-3
-                    right-3
-                    bg-red-500
-                    hover:bg-red-600
-                    text-white
-                    px-3
-                    py-2
-                    rounded-lg
-                    shadow-md
-                    opacity-0
-                    group-hover:opacity-100
-                    transition
-                  "
-                >
-                  🗑 Delete
-                </button>
+                  <button
+                    onClick={() => handleDelete(item.id)}
+                    className="
+                      absolute
+                      top-3
+                      right-3
+                      bg-red-500
+                      hover:bg-red-600
+                      text-white
+                      px-3
+                      py-2
+                      rounded-lg
+                      shadow-md
+                      opacity-0
+                      group-hover:opacity-100
+                      transition
+                    "
+                  >
+                    🗑 Delete
+                  </button>
+                </div>
+
+                <div className="p-4">
+                  <button
+                    onClick={() => likeMedia(item.id)}
+                    className="
+                      bg-pink-500
+                      hover:bg-pink-600
+                      text-white
+                      px-3
+                      py-2
+                      rounded-lg
+                    "
+                  >
+                    ❤️ Like
+                  </button>
+
+                  <div className="mt-4">
+                    <input
+                      type="text"
+                      placeholder="Add comment..."
+                      value={comments[item.id] || ""} // Bind the comment to the specific media item
+                      onChange={(e) =>
+                        handleCommentChange(item.id, e.target.value)
+                      }
+                      className="
+                        border
+                        p-2
+                        rounded-lg
+                        w-full
+                      "
+                    />
+
+                    <button
+                      onClick={() => addComment(item.id)}
+                      className="
+                        bg-blue-600
+                        hover:bg-blue-700
+                        text-white
+                        px-3
+                        py-2
+                        rounded-lg
+                        mt-2
+                      "
+                    >
+                      Comment
+                    </button>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
