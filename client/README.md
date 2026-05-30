@@ -51,19 +51,7 @@ npm install
 npm run dev
 ```
 
-## Environment Variables
 
-Create `.env` inside server:
-
-```env
-DB_USER=your_user
-DB_HOST=localhost
-DB_NAME=event_media_db
-DB_PASSWORD=your_password
-DB_PORT=5432
-
-JWT_SECRET=your_secret
-```
 
 ## Future Enhancements
 

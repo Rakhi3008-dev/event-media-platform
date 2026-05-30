@@ -25,7 +25,7 @@ export default function CreateEvent() {
 
     try {
       const token = localStorage.getItem("token");
-      console.log("TOKEN:", token);
+     
       await API.post("/events", form, {
         headers: {
           Authorization: `Bearer ${token}`,

@@ -12,28 +12,21 @@ export default function Login() {
     e.preventDefault();
   
     try {
-      console.log("EMAIL:", email);
-      console.log("PASSWORD:", password);
+    
   
       const res = await API.post("/auth/login", {
         email,
         password,
       });
   
-      console.log("RESPONSE:", res.data);
+     
   
       localStorage.setItem("token", res.data.token);
-  
-      console.log(
-        "STORED TOKEN:",
-        localStorage.getItem("token")
-      );
   
       alert("Login Successful");
       navigate("/");
     } catch (err) {
       console.error(err);
-      console.log(err.response?.data);
       alert("Login Failed");
     }
   };

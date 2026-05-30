@@ -37,20 +37,14 @@ export default function EventGallery() {
   return (
     <div className="min-h-screen bg-gray-100">
       <div className="text-center py-10">
-        <h1 className="text-5xl font-bold text-blue-600">
-          Event Gallery
-        </h1>
+        <h1 className="text-5xl font-bold text-blue-600">Event Gallery</h1>
 
-        <p className="text-gray-500 mt-2">
-          Browse and upload event memories
-        </p>
+        <p className="text-gray-500 mt-2">Browse and upload event memories</p>
       </div>
 
       <div className="max-w-6xl mx-auto px-6">
         <div className="bg-white rounded-2xl shadow-md p-6 mb-8">
-          <h2 className="text-xl font-semibold mb-4">
-            Upload Media
-          </h2>
+          <h2 className="text-xl font-semibold mb-4">Upload Media</h2>
 
           <UploadMedia eventId={id} />
         </div>
@@ -62,12 +56,9 @@ export default function EventGallery() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {media.map((item) => (
-              <div
-                key={item.id}
-                className="relative group"
-              >
+              <div key={item.id} className="relative group">
                 <img
-                  src={`http://localhost:8000${item.media_url}`}
+                  src={`https://event-media-platform.onrender.com${item.media_url}`}
                   alt=""
                   className="
                     w-full

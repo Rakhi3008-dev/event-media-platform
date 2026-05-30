@@ -21,8 +21,6 @@ export default function Signup() {
 
       alert("Signup Successful!");
 
-      console.log(res.data);
-
       navigate("/login");
     } catch (error) {
       console.error(error);
