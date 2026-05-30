@@ -4,7 +4,7 @@ import API from "../services/api";
 
 export default function CreateEvent() {
   const navigate = useNavigate();
-
+  const [coverImage, setCoverImage] = useState(null);
   const [form, setForm] = useState({
     title: "",
     description: "",
@@ -22,16 +22,35 @@ export default function CreateEvent() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     try {
       const token = localStorage.getItem("token");
-     
-      await API.post("/events", form, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
+  
+      const formData = new FormData();
+  
+      formData.append("title", form.title);
+      formData.append("description", form.description);
+      formData.append("category", form.category);
+      formData.append("event_date", form.event_date);
+      formData.append("visibility", form.visibility);
+  
+      if (coverImage) {
+        formData.append(
+          "coverImage",
+          coverImage
+        );
+      }
+  
+      await API.post(
+        "/events",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+  
       alert("Event Created!");
       navigate("/");
     } catch (error) {
@@ -39,7 +58,6 @@ export default function CreateEvent() {
       alert("Failed to create event");
     }
   };
-
   return (
     <div className="max-w-xl mx-auto mt-10 p-6 border rounded-lg">
       <h1 className="text-2xl font-bold mb-4">
@@ -53,7 +71,12 @@ export default function CreateEvent() {
           placeholder="Title"
           onChange={handleChange}
         />
-
+<input
+  type="file"
+  onChange={(e) =>
+    setCoverImage(e.target.files[0])
+  }
+/>
         <textarea
           className="w-full border p-2 mb-3"
           name="description"
@@ -90,6 +113,7 @@ export default function CreateEvent() {
         >
           Create Event
         </button>
+
       </form>
     </div>
   );

@@ -65,6 +65,14 @@ return (
       border
       "
     >
+  <img
+  src={
+    event.cover_image ||
+    "https://images.unsplash.com/photo-1511578314322-379afb476865"
+  }
+  alt={event.title}
+  className="w-full h-48 object-cover"
+/>
       <div className="mb-4">
         <h2 className="text-2xl font-bold text-gray-800">
           {event.title}
