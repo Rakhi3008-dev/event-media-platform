@@ -15,7 +15,7 @@ export const uploadMedia = async (req, res) => {
       });
     }
 
-    const media_url = `/uploads/${req.file.filename}`;
+    const media_url = req.file.path;
 
     const result = await pool.query(
       `INSERT INTO media

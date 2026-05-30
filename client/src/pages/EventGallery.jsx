@@ -139,7 +139,7 @@ export default function EventGallery() {
               >
                 <div className="relative group">
                   <img
-                    src={`https://event-media-platform.onrender.com${item.media_url}`}
+                    src={item.media_url}
                     alt=""
                     className="
                       w-full
