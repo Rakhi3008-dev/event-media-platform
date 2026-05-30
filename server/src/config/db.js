@@ -12,10 +12,8 @@ const pool = new Pool({
   },
 });
 
+pool.on("error", (err) => {
+  console.error("Unexpected PG Pool Error:", err);
+});
 
-pool.connect()
-  .then(() => console.log("✅ DB Connected"))
-  .catch(err => console.error("❌ DB Connection Error:", err));
-
-
-  export default pool;
+export default pool;
