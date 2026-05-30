@@ -1,4 +1,9 @@
 import multer from "multer";
+import fs from "fs";
+
+if (!fs.existsSync("uploads")) {
+  fs.mkdirSync("uploads");
+}
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -10,7 +15,7 @@ const storage = multer.diskStorage({
       null,
       Date.now() + "-" + file.originalname
     );
-  }
+  },
 });
 
 const upload = multer({ storage });
