@@ -3,7 +3,7 @@ import API from "../services/api";
 
 export default function UploadMedia({ eventId }) {
   const [file, setFile] = useState(null);
-
+  console.log(req.file);
   const handleUpload = async () => {
     if (!file) return;
 
