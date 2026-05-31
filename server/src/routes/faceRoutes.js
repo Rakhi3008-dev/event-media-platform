@@ -1,12 +1,13 @@
 import express from "express";
+import upload from "../config/multer.js";
+import { uploadSelfie } from "../controllers/faceController.js";
 
 const router = express.Router();
 
-router.post("/upload-selfie", (req, res) => {
-  res.json({
-    success: true,
-    message: "Selfie route working",
-  });
-});
-
+router.post(
+    "/upload-selfie",
+    protect,
+    upload.single("selfie"),
+    uploadSelfie
+  );
 export default router;
