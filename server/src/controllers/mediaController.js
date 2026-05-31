@@ -1,5 +1,7 @@
 import pool from "../config/db.js";
 import sharp from "sharp";
+import axios from "axios";
+
 
 export const uploadMedia = async (req, res) => {
   
@@ -110,35 +112,70 @@ export const deleteMedia = async (req, res) => {
       });
     }
   };
-  export const downloadMedia = async (req, res) => {
-    try {
-      const { id } = req.params;
-  
-      const media = await pool.query(
-        `SELECT *
-         FROM media
-         WHERE id=$1`,
-        [id]
-      );
-  
-      if (media.rows.length === 0) {
-        return res.status(404).json({
-          message: "Media not found",
-        });
-      }
-  
-      const imageUrl = media.rows[0].media_url;
-  
-      res.json({
-        imageUrl,
-        message: "Watermark route created",
-      });
-  
-    } catch (error) {
-      console.error(error);
-  
-      res.status(500).json({
-        message: error.message,
+ 
+export const downloadMedia = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const mediaResult = await pool.query(
+      `SELECT * FROM media WHERE id=$1`,
+      [id]
+    );
+
+    if (mediaResult.rows.length === 0) {
+      return res.status(404).json({
+        message: "Media not found",
       });
     }
-  };
+
+    const media = mediaResult.rows[0];
+
+    const imageResponse = await axios.get(
+      media.media_url,
+      {
+        responseType: "arraybuffer",
+      }
+    );
+
+    const watermarkSvg = `
+      <svg width="800" height="100">
+        <text
+          x="20"
+          y="60"
+          font-size="32"
+          fill="white"
+          opacity="0.7"
+        >
+          EventHub Watermark
+        </text>
+      </svg>
+    `;
+
+    const watermarkedImage = await sharp(
+      imageResponse.data
+    )
+      .composite([
+        {
+          input: Buffer.from(watermarkSvg),
+          gravity: "south",
+        },
+      ])
+      .jpeg()
+      .toBuffer();
+
+    res.set({
+      "Content-Type": "image/jpeg",
+      "Content-Disposition":
+        "attachment; filename=watermarked.jpg",
+    });
+
+    res.send(watermarkedImage);
+
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};
