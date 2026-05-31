@@ -1,7 +1,7 @@
 import express from "express";
 import upload from "../config/multer.js";
 import { protect } from "../middleware/authMiddleware.js";
-import { uploadSelfie } from "../controllers/faceController.js";
+
 import {
     uploadSelfie,
     getMySelfie
