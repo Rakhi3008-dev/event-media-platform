@@ -17,19 +17,21 @@ export const uploadMedia = async (req, res) => {
 
     const media_url = req.file.path;
 
-    const result = await pool.query(
-      `INSERT INTO media
-      (event_id, uploaded_by, media_url, media_type)
-      VALUES($1,$2,$3,$4)
-      RETURNING *`,
-      [
-        event_id,
-        req.user.id,
-        media_url,
-        req.file.mimetype
-      ]
-    );
+    const tags = ["event", "photo"];
 
+const result = await pool.query(
+  `INSERT INTO media
+  (event_id, uploaded_by, media_url, media_type, tags)
+  VALUES($1,$2,$3,$4,$5)
+  RETURNING *`,
+  [
+    event_id,
+    req.user.id,
+    media_url,
+    req.file.mimetype,
+    tags
+  ]
+);
     res.status(201).json({
       success: true,
       media: result.rows[0]

@@ -174,6 +174,24 @@ export default function EventGallery() {
                 </div>
 
                 <div className="p-4">
+                <div className="flex flex-wrap gap-2 mb-3">
+    {(item.tags || []).map((tag) => (
+      <span
+        key={tag}
+        className="
+          bg-blue-100
+          text-blue-700
+          px-2
+          py-1
+          rounded-full
+          text-xs
+        "
+      >
+        #{tag}
+      </span>
+    ))}
+  </div>
+
                   <button
                     onClick={() => likeMedia(item.id)}
                     className="

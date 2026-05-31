@@ -3,9 +3,12 @@ import API from "../services/api";
 
 export default function UploadMedia({ eventId }) {
   const [file, setFile] = useState(null);
-  console.log("FILE:", req.file);
+ 
   const handleUpload = async () => {
-    if (!file) return;
+    if (!file) {
+      alert("Please select a file");
+      return;
+    }
 
     const token = localStorage.getItem("token");
 
@@ -14,7 +17,7 @@ export default function UploadMedia({ eventId }) {
     formData.append("event_id", eventId);
 
     try {
-      await API.post(
+      const res = await API.post(
         "/media/upload",
         formData,
         {
@@ -24,7 +27,10 @@ export default function UploadMedia({ eventId }) {
         }
       );
 
+      console.log("UPLOAD RESPONSE:", res.data);
+
       alert("Upload Successful");
+      window.location.reload(); // refresh gallery
     } catch (error) {
       console.error(error);
       alert("Upload Failed");
@@ -32,13 +38,16 @@ export default function UploadMedia({ eventId }) {
   };
 
   return (
-    <div>
+    <div className="flex flex-col gap-3">
       <input
         type="file"
         onChange={(e) => setFile(e.target.files[0])}
       />
 
-      <button onClick={handleUpload}>
+      <button
+        onClick={handleUpload}
+        className="bg-blue-600 text-white px-4 py-2 rounded-lg"
+      >
         Upload
       </button>
     </div>
