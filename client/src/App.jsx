@@ -26,11 +26,11 @@ function App() {
             </ProtectedRoute>
           }
         />
-      </Routes>
-      <Route
+        <Route
   path="/my-photos"
   element={<MyPhotos />}
 />
+      </Routes>
     </BrowserRouter>
   );
 }
