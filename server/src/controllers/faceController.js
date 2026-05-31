@@ -2,9 +2,9 @@ import pool from "../config/db.js";
 
 export const uploadSelfie = async (req, res) => {
   try {
-    const selfie_url = req.file.path;
     console.log("FILE:", req.file);
     console.log("USER:", req.user);
+    const selfie_url = req.file.path;
     const result = await pool.query(
       `INSERT INTO face_profiles
       (user_id, selfie_url)
