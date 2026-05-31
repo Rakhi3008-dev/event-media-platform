@@ -214,7 +214,24 @@ export default function EventGallery() {
                   >
                     ❤️ {likes[item.id] || 0} Likes
                   </button>
-
+                  <button
+  onClick={() =>
+    window.open(
+      `https://event-media-platform.onrender.com/api/media/download/${item.id}`
+    )
+  }
+  className="
+    bg-green-600
+    hover:bg-green-700
+    text-white
+    px-3
+    py-2
+    rounded-lg
+    ml-2
+  "
+>
+  ⬇ Download
+</button>
                   <div className="mt-4">
                     <input
                       type="text"
