@@ -12,12 +12,9 @@ export default function EventGallery() {
   const [allComments, setAllComments] = useState({});
   const [search, setSearch] = useState("");
 
-
   const fetchMedia = async () => {
-    const res = await API.get(
-      `/media/event/${id}?search=${search}`
-    );
-  
+    const res = await API.get(`/media/event/${id}?search=${search}`);
+
     setMedia(res.data);
   };
   useEffect(() => {
@@ -90,21 +87,17 @@ export default function EventGallery() {
   const fetchInteractions = async () => {
     const likesObj = {};
     const commentsObj = {};
-  
+
     for (const item of media) {
-      const likesRes = await API.get(
-        `/interactions/likes/${item.id}`
-      );
-  
+      const likesRes = await API.get(`/interactions/likes/${item.id}`);
+
       likesObj[item.id] = likesRes.data.count;
-  
-      const commentsRes = await API.get(
-        `/interactions/comment/${item.id}`
-      );
-  
+
+      const commentsRes = await API.get(`/interactions/comment/${item.id}`);
+
       commentsObj[item.id] = commentsRes.data;
     }
-  
+
     setLikes(likesObj);
     setAllComments(commentsObj);
   };
@@ -129,19 +122,18 @@ export default function EventGallery() {
           <UploadMedia eventId={id} />
         </div>
         <input
-    type="text"
-    placeholder="Search tags..."
-    value={search}
-    onChange={(e) => setSearch(e.target.value)}
-    className="
+          type="text"
+          placeholder="Search tags..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="
       w-full
       border
       p-3
       rounded-lg
       mb-6
     "
-  />
-
+        />
 
         {media.length === 0 ? (
           <div className="text-center text-gray-500 text-lg">
@@ -191,11 +183,11 @@ export default function EventGallery() {
                 </div>
 
                 <div className="p-4">
-                <div className="flex flex-wrap gap-2 mb-3">
-    {(item.tags || []).map((tag) => (
-      <span
-        key={tag}
-        className="
+                  <div className="flex flex-wrap gap-2 mb-3">
+                    {(item.tags || []).map((tag) => (
+                      <span
+                        key={tag}
+                        className="
           bg-blue-100
           text-blue-700
           px-2
@@ -203,11 +195,11 @@ export default function EventGallery() {
           rounded-full
           text-xs
         "
-      >
-        #{tag}
-      </span>
-    ))}
-  </div>
+                      >
+                        #{tag}
+                      </span>
+                    ))}
+                  </div>
 
                   <button
                     onClick={() => likeMedia(item.id)}
@@ -254,21 +246,14 @@ export default function EventGallery() {
                       Comment
                     </button>
                     <div className="mt-4">
-  {(allComments[item.id] || []).map((c) => (
-    <div
-      key={c.id}
-      className="border-b py-2"
-    >
-      <p className="font-semibold">
-        {c.name}
-      </p>
+                      {(allComments[item.id] || []).map((c) => (
+                        <div key={c.id} className="border-b py-2">
+                          <p className="font-semibold">{c.name}</p>
 
-      <p className="text-gray-600">
-        {c.comment_text}
-      </p>
-    </div>
-  ))}
-</div>
+                          <p className="text-gray-600">{c.comment_text}</p>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
