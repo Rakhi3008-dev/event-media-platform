@@ -5,11 +5,11 @@ import { uploadSelfie } from "../controllers/faceController.js";
 
 const router = express.Router();
 
-router.post(
-  "/upload-selfie",
-  protect,
-  upload.single("selfie"),
-  uploadSelfie
-);
 
+router.post(
+    "/upload-selfie",
+    protect,
+    upload.single("selfie"),
+    uploadSelfie
+  );
 export default router;
