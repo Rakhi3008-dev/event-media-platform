@@ -29,7 +29,9 @@ export default function Navbar() {
             Create Event
           </Link>
         )}
-
+        <Link to="/my-photos" className="hover:text-blue-600">
+  My Photos
+</Link>
         {!token ? (
           <>
             <Link to="/login" className="hover:text-blue-600">

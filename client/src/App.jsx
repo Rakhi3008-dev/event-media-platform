@@ -7,6 +7,7 @@ import EventGallery from "./pages/EventGallery";
 import CreateEvent from "./pages/CreateEvent";
 import Navbar from "./components/Navbar";
 import ProtectedRoute from "./components/ProtectedRoute";
+import MyPhotos from "./pages/MyPhotos";
 
 function App() {
   return (
@@ -26,6 +27,10 @@ function App() {
           }
         />
       </Routes>
+      <Route
+  path="/my-photos"
+  element={<MyPhotos />}
+/>
     </BrowserRouter>
   );
 }
