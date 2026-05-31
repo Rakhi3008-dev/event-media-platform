@@ -6,7 +6,6 @@ import upload from "../config/multer.js";
 
 const router = express.Router();
 
-router.post("/", protect, createEvent);
 router.get("/", getEvents);
 
 router.post(
