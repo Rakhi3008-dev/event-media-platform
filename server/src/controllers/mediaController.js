@@ -48,26 +48,47 @@ const result = await pool.query(
 
 
 export const getEventMedia = async (req, res) => {
-  try {
-    const { eventId } = req.params;
-
-    const result = await pool.query(
-      `SELECT * FROM media
-       WHERE event_id=$1
-       ORDER BY created_at DESC`,
-      [eventId]
-    );
-
-    res.json(result.rows);
-
-  } catch (error) {
-    console.error(error);
-
-    res.status(500).json({
-      message: error.message
-    });
-  }
-};
+    try {
+      const { eventId } = req.params;
+      const { search } = req.query;
+  
+      let result;
+  
+      if (search) {
+        result = await pool.query(
+          `SELECT *
+           FROM media
+           WHERE event_id = $1
+           AND (
+             LOWER(media_type) LIKE LOWER($2)
+             OR EXISTS (
+               SELECT 1
+               FROM unnest(tags) tag
+               WHERE LOWER(tag) LIKE LOWER($2)
+             )
+           )
+           ORDER BY created_at DESC`,
+          [eventId, `%${search}%`]
+        );
+      } else {
+        result = await pool.query(
+          `SELECT *
+           FROM media
+           WHERE event_id = $1
+           ORDER BY created_at DESC`,
+          [eventId]
+        );
+      }
+  
+      res.json(result.rows);
+    } catch (error) {
+      console.error(error);
+  
+      res.status(500).json({
+        message: error.message,
+      });
+    }
+  };
 export const deleteMedia = async (req, res) => {
     try {
       const { id } = req.params;

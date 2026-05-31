@@ -10,16 +10,19 @@ export default function EventGallery() {
   const [comments, setComments] = useState({}); // Manage comments per media item
   const [likes, setLikes] = useState({});
   const [allComments, setAllComments] = useState({});
+  const [search, setSearch] = useState("");
 
-  useEffect(() => {
-    fetchMedia();
-  }, []);
 
   const fetchMedia = async () => {
-    const res = await API.get(`/media/event/${id}`);
+    const res = await API.get(
+      `/media/event/${id}?search=${search}`
+    );
+  
     setMedia(res.data);
   };
-
+  useEffect(() => {
+    fetchMedia();
+  }, [search]);
   const handleDelete = async (mediaId) => {
     try {
       const token = localStorage.getItem("token");
@@ -125,6 +128,20 @@ export default function EventGallery() {
 
           <UploadMedia eventId={id} />
         </div>
+        <input
+    type="text"
+    placeholder="Search tags..."
+    value={search}
+    onChange={(e) => setSearch(e.target.value)}
+    className="
+      w-full
+      border
+      p-3
+      rounded-lg
+      mb-6
+    "
+  />
+
 
         {media.length === 0 ? (
           <div className="text-center text-gray-500 text-lg">
