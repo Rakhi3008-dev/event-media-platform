@@ -6,6 +6,7 @@ import {
     getEventMedia,
     deleteMedia
   } from "../controllers/mediaController.js";
+  import { downloadMedia } from "../controllers/mediaController.js";
   
 const router = express.Router();
 
@@ -24,6 +25,10 @@ router.get(
     protect,
     deleteMedia
   );
-  
+  router.get(
+    "/download/:id",
+    protect,
+    downloadMedia
+  );
 
 export default router;

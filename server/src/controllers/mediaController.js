@@ -1,4 +1,5 @@
 import pool from "../config/db.js";
+import sharp from "sharp";
 
 export const uploadMedia = async (req, res) => {
   
@@ -104,6 +105,38 @@ export const deleteMedia = async (req, res) => {
       });
   
     } catch (error) {
+      res.status(500).json({
+        message: error.message,
+      });
+    }
+  };
+  export const downloadMedia = async (req, res) => {
+    try {
+      const { id } = req.params;
+  
+      const media = await pool.query(
+        `SELECT *
+         FROM media
+         WHERE id=$1`,
+        [id]
+      );
+  
+      if (media.rows.length === 0) {
+        return res.status(404).json({
+          message: "Media not found",
+        });
+      }
+  
+      const imageUrl = media.rows[0].media_url;
+  
+      res.json({
+        imageUrl,
+        message: "Watermark route created",
+      });
+  
+    } catch (error) {
+      console.error(error);
+  
       res.status(500).json({
         message: error.message,
       });
