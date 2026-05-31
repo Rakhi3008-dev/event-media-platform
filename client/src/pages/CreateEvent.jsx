@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import API from "../services/api";
 
 export default function CreateEvent() {
+    
   const navigate = useNavigate();
   const [coverImage, setCoverImage] = useState(null);
   const [form, setForm] = useState({

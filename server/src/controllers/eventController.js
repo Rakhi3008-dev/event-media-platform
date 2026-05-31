@@ -2,6 +2,9 @@ import pool from "../config/db.js";
 
 export const createEvent = async (req, res) => {
     try {
+        console.log("BODY:", req.body);
+        console.log("FILE:", req.file);
+        console.log("USER:", req.user);
       const {
         title,
         description,
@@ -45,12 +48,13 @@ export const createEvent = async (req, res) => {
         event: result.rows[0],
       });
     } catch (error) {
-      console.error(error);
-  
-      res.status(500).json({
-        message: error.message,
-      });
-    }
+        console.error("CREATE EVENT ERROR:", error);
+        console.error(error.stack);
+      
+        res.status(500).json({
+          message: error.message,
+        });
+      }
   };
 
 export const getEvents = async (req, res) => {
