@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import API from "../services/api";
+const [selfieData, setSelfieData] = useState(null);
 
 export default function MyPhotos() {
   const [selfie, setSelfie] = useState(null);
@@ -29,7 +30,28 @@ export default function MyPhotos() {
       alert("Upload failed");
     }
   };
-
+  useEffect(() => {
+    fetchSelfie();
+  }, []);
+  
+  const fetchSelfie = async () => {
+    try {
+      const token = localStorage.getItem("token");
+  
+      const res = await API.get(
+        "/faces/my-selfie",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+  
+      setSelfieData(res.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
     <div className="max-w-4xl mx-auto p-6">
       <h1 className="text-4xl font-bold mb-6">
@@ -47,7 +69,23 @@ export default function MyPhotos() {
       >
         Upload Selfie
       </button>
+      {selfieData && (
+  <div className="mt-6">
+    <h2 className="text-xl font-semibold mb-3">
+      Your Uploaded Selfie
+    </h2>
 
+    <img
+      src={selfieData.selfie_url}
+      alt="Selfie"
+      className="
+        w-64
+        rounded-2xl
+        shadow-lg
+      "
+    />
+  </div>
+)}
       <div className="mt-8">
         Matching photos will appear here
       </div>
