@@ -19,7 +19,7 @@ export default function EventGallery() {
   };
   useEffect(() => {
     fetchMedia();
-  }, [search]);
+  }, [id, search]);
   const handleDelete = async (mediaId) => {
     try {
       const token = localStorage.getItem("token");
