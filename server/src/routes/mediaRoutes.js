@@ -25,10 +25,7 @@ router.get(
     protect,
     deleteMedia
   );
-  router.get(
-    "/download/:id",
-    protect,
-    downloadMedia
-  );
+
+  router.get("/download/:id", downloadMedia);
 
 export default router;
