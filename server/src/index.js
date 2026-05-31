@@ -6,6 +6,7 @@ import userRoutes from "./routes/userRoutes.js";
 import eventRoutes from "./routes/eventRoutes.js";
 import mediaRoutes from "./routes/mediaRoutes.js";
 import interactionRoutes from "./routes/interactionRoutes.js";
+import faceRoutes from "./routes/faceRoutes.js";
 
 const app = express();
 
@@ -19,6 +20,8 @@ app.use("/api/events", eventRoutes);
 app.use("/uploads", express.static("uploads"));
 app.use("/api/media", mediaRoutes);
 app.use("/api/interactions", interactionRoutes);
+app.use("/api/faces", faceRoutes);
+
 
 app.get("/", (req, res) => {
   res.send("API Running");
