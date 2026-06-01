@@ -23,6 +23,8 @@ export const getStats = async (req, res) => {
         totalMedia: totalMedia.rows[0].count,
         totalLikes: totalLikes.rows[0].count,
         totalComments: totalComments.rows[0].count,
+        mediaPerEvent: mediaPerEvent.rows,
+  likesPerEvent: likesPerEvent.rows,
       
         popularEvent:
           popularEvent.rows[0] || null,
@@ -45,4 +47,23 @@ const popularEvent = await pool.query(`
     ORDER BY total_likes DESC
     LIMIT 1
   `);
- 
+  const mediaPerEvent = await pool.query(`
+    SELECT
+      e.title,
+      COUNT(m.id) AS media_count
+    FROM events e
+    LEFT JOIN media m
+    ON m.event_id = e.id
+    GROUP BY e.id, e.title
+  `);
+  const likesPerEvent = await pool.query(`
+    SELECT
+      e.title,
+      COUNT(l.id) AS likes_count
+    FROM events e
+    LEFT JOIN media m
+    ON m.event_id = e.id
+    LEFT JOIN likes l
+    ON l.media_id = m.id
+    GROUP BY e.id, e.title
+  `);
