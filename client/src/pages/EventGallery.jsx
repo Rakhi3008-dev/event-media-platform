@@ -27,14 +27,13 @@ const [dateSearch, setDateSearch] =
         const res = await API.get(
             `/media/event/${id}?search=${search}&user=${userSearch}&date=${dateSearch}`
           );
-          
-          setMedia(res.data.media || []);
-
-console.log("MEDIA RESPONSE:", res.data);
+          console.log("MEDIA RESPONSE:", res.data);
 console.log("TYPE:", typeof res.data);
 console.log("IS ARRAY:", Array.isArray(res.data));
+          setMedia(res.data.media || []);
+
+
   
-      setMedia(res.data);
     } catch (err) {
       console.error("FETCH MEDIA ERROR:", err);
     }
