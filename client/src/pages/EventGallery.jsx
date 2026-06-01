@@ -6,6 +6,8 @@ import UploadMedia from "../components/UploadMedia";
 export default function EventGallery() {
 
     const { id } = useParams();
+    console.log("Event ID:", id);
+
   const [media, setMedia] = useState([]);
   const [comments, setComments] = useState({}); // Manage comments per media item
   const [likes, setLikes] = useState({});
