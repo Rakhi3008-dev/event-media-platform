@@ -24,13 +24,25 @@ export default function Dashboard() {
     setStats(res.data);
   };
 
-  if (!stats) return <div>Loading...</div>;
+  if (!stats) {
+    return (
+      <div className="text-center mt-20 text-xl">
+        Loading Dashboard...
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-6xl mx-auto p-8">
-      <h1 className="text-4xl font-bold mb-8">
-        Analytics Dashboard
-      </h1>
+      <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-8 rounded-2xl mb-8">
+  <h1 className="text-4xl font-bold">
+    EventHub Analytics
+  </h1>
+
+  <p className="mt-2">
+    Monitor events, media activity and engagement.
+  </p>
+</div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
         <div className="bg-white p-6 rounded-2xl shadow">

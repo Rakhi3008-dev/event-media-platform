@@ -1,5 +1,6 @@
 import { useState } from "react";
 import API from "../services/api";
+import toast from "react-hot-toast";
 
 export default function UploadMedia({ eventId }) {
   const [file, setFile] = useState(null);
@@ -29,11 +30,11 @@ export default function UploadMedia({ eventId }) {
 
       console.log("UPLOAD RESPONSE:", res.data);
 
-      alert("Upload Successful");
+      toast.success("Upload Successful");
       window.location.reload(); // refresh gallery
     } catch (error) {
       console.error(error);
-      alert("Upload Failed");
+      toast.error("Upload Failed");
     }
   };
 

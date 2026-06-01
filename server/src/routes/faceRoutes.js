@@ -1,6 +1,8 @@
 import express from "express";
 import upload from "../config/multer.js";
 import { protect } from "../middleware/authMiddleware.js";
+import { DetectFacesCommand } from "@aws-sdk/client-rekognition";
+import rekognition from "../config/rekognition.js";
 
 import {
     uploadSelfie,
@@ -21,4 +23,24 @@ router.post(
     protect,
     getMySelfie
   );
+  router.get("/test-face", async (req, res) => {
+    try {
+      const command = new DetectFacesCommand({
+        Image: {
+          Bytes: Buffer.from("test"),
+        },
+      });
+  
+      await rekognition.send(command);
+  
+      res.json({
+        success: true,
+      });
+  
+    } catch (err) {
+      res.json({
+        message: err.message,
+      });
+    }
+  });
 export default router;

@@ -11,11 +11,15 @@ export default function EventGallery() {
   const [likes, setLikes] = useState({});
   const [allComments, setAllComments] = useState({});
   const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const fetchMedia = async () => {
+    setLoading(true);
     const res = await API.get(`/media/event/${id}?search=${search}`);
 
     setMedia(res.data);
+
+setLoading(false);
   };
   useEffect(() => {
     fetchMedia();
@@ -106,6 +110,15 @@ export default function EventGallery() {
       fetchInteractions();
     }
   }, [media]);
+
+  // Render loading state
+  if (loading) {
+    return (
+      <div className="text-center py-10">
+        <p>Loading media...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -232,6 +245,23 @@ export default function EventGallery() {
 >
   ⬇ Download
 </button>
+<div className="flex flex-wrap gap-2 mt-2">
+  {item.tags?.map((tag) => (
+    <span
+      key={tag}
+      className="
+        bg-blue-100
+        text-blue-700
+        px-2
+        py-1
+        rounded-full
+        text-xs
+      "
+    >
+      #{tag}
+    </span>
+  ))}
+</div>
                   <div className="mt-4">
                     <input
                       type="text"

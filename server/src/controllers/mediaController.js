@@ -20,7 +20,10 @@ export const uploadMedia = async (req, res) => {
 
     const media_url = req.file.path;
 
-    const tags = ["event", "photo"];
+    const tags = generateTags(
+        req.file.originalname,
+        req.file.mimetype
+      );
 
 const result = await pool.query(
   `INSERT INTO media
@@ -179,3 +182,21 @@ export const downloadMedia = async (req, res) => {
     });
   }
 };
+const generateTags = (filename, mimetype) => {
+    const tags = [];
+  
+    const text = filename.toLowerCase();
+  
+    if (text.includes("workshop")) tags.push("workshop");
+    if (text.includes("hackathon")) tags.push("hackathon");
+    if (text.includes("seminar")) tags.push("seminar");
+    if (text.includes("event")) tags.push("event");
+    if (text.includes("team")) tags.push("team");
+    if (text.includes("crowd")) tags.push("crowd");
+  
+    if (mimetype.includes("image")) {
+      tags.push("photo");
+    }
+  
+    return tags.length ? tags : ["general"];
+  };
