@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import API from "../services/api";
-const [selfieData, setSelfieData] = useState(null);
 
 export default function MyPhotos() {
   const [selfie, setSelfie] = useState(null);
-
+  const [selfieData, setSelfieData] = useState(null);
   const handleUpload = async () => {
     if (!selfie) return;
 
