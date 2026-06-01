@@ -4,8 +4,8 @@ import API from "../services/api";
 import UploadMedia from "../components/UploadMedia";
 
 export default function EventGallery() {
-  
-  const { eventId } = useParams();
+
+    const { id } = useParams();
   const [media, setMedia] = useState([]);
   const [comments, setComments] = useState({}); // Manage comments per media item
   const [likes, setLikes] = useState({});
@@ -21,7 +21,7 @@ const [dateSearch, setDateSearch] =
   const fetchMedia = async () => {
     setLoading(true);
     const res = await API.get(
-        `/media/${eventId}?search=${search}&user=${userSearch}&date=${dateSearch}`
+        `/media/${id}?search=${search}&user=${userSearch}&date=${dateSearch}`
       );
     setMedia(res.data);
 
