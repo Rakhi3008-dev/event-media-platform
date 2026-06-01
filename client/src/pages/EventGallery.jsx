@@ -24,11 +24,11 @@ const [dateSearch, setDateSearch] =
     setLoading(true);
   
     try {
-      const res = await API.get(
-        `/media/event/${id}?search=${search}&user=${userSearch}&date=${dateSearch}`
-      );
-  
-    
+        const res = await API.get(
+            `/media/event/${id}?search=${search}&user=${userSearch}&date=${dateSearch}`
+          );
+          
+          setMedia(res.data.media || []);
 
 console.log("MEDIA RESPONSE:", res.data);
 console.log("TYPE:", typeof res.data);

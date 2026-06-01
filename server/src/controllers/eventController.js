@@ -78,7 +78,6 @@ export const getEvents = async (req, res) => {
     }
 
     res.json(result.rows);
-
   } catch (error) {
     console.error(error);
 
