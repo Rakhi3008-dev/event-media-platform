@@ -12,18 +12,29 @@ export default function EventGallery() {
   const [allComments, setAllComments] = useState({});
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
+  const [userSearch, setUserSearch] =
+  useState("");
+
+const [dateSearch, setDateSearch] =
+  useState("");
 
   const fetchMedia = async () => {
     setLoading(true);
-    const res = await API.get(`/media/event/${id}?search=${search}`);
-
+    const res = await API.get(
+        `/media/${eventId}?search=${search}&user=${userSearch}&date=${dateSearch}`
+      );
     setMedia(res.data);
 
 setLoading(false);
   };
+
   useEffect(() => {
     fetchMedia();
-  }, [id, search]);
+  }, [
+    search,
+    userSearch,
+    dateSearch
+  ]);
   const handleDelete = async (mediaId) => {
     try {
       const token = localStorage.getItem("token");
@@ -147,7 +158,20 @@ setLoading(false);
       mb-6
     "
         />
+     <input
+  type="text"
+  placeholder="Search User"
+  value={userSearch}
+  onChange={(e) => setUserSearch(e.target.value)}
+  className="border p-3 rounded-lg mb-3"
+/>
 
+<input
+  type="date"
+  value={dateSearch}
+  onChange={(e) => setDateSearch(e.target.value)}
+  className="border p-3 rounded-lg mb-3"
+/>
         {media.length === 0 ? (
           <div className="text-center text-gray-500 text-lg">
             No media uploaded yet
