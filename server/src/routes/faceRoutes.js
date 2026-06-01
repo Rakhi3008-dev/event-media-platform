@@ -3,12 +3,11 @@ import upload from "../config/multer.js";
 import { protect } from "../middleware/authMiddleware.js";
 import { DetectFacesCommand } from "@aws-sdk/client-rekognition";
 import rekognition from "../config/rekognition.js";
-
-import {
+  import {
     uploadSelfie,
-    getMySelfie
+    getMySelfie,
+    getMyMatches
   } from "../controllers/faceController.js";
-
 const router = express.Router();
 
 
@@ -22,6 +21,11 @@ router.post(
     "/my-selfie",
     protect,
     getMySelfie
+  );
+  router.get(
+    "/matches",
+    protect,
+    getMyMatches
   );
   router.get("/test-face", async (req, res) => {
     try {
