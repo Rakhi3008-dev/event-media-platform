@@ -144,10 +144,12 @@ export const downloadMedia = async (req, res) => {
     );
 
     const event = eventResult.rows[0];
+    const userRole = req.user?.role || "Participant";
 
-    const watermarkText = `
-${event.category} | ${event.title} | ${req.user.role}
-`;
+    const watermarkText =
+      `${event?.category || "Club"} | ` +
+      `${event?.title || "Event"} | ` +
+      `${userRole}`;
 
     const watermarkSvg = `
       <svg width="1200" height="100">
