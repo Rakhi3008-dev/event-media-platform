@@ -145,27 +145,29 @@ export const downloadMedia = async (req, res) => {
 
     const event = eventResult.rows[0];
     const userRole = req.user?.role || "Participant";
+    const image = sharp(imageResponse.data);
 
+    const metadata = await image.metadata();
     const watermarkText =
       `${event?.category || "Club"} | ` +
       `${event?.title || "Event"} | ` +
       `${userRole}`;
 
-    const watermarkSvg = `
-      <svg width="1200" height="100">
+      const watermarkSvg = `
+      <svg width="${metadata.width}" height="80">
         <text
           x="20"
-          y="60"
-          font-size="28"
+          y="50"
+          font-size="20"
           fill="white"
           opacity="0.7"
         >
           ${watermarkText}
         </text>
       </svg>
-    `;
+      `;
 
-    const watermarkedImage = await sharp(imageResponse.data)
+      const watermarkedImage = await image
       .composite([
         {
           input: Buffer.from(watermarkSvg),
