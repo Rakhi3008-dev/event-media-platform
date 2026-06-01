@@ -1,5 +1,16 @@
 import { useEffect, useState } from "react";
 import API from "../services/api";
+import {
+    BarChart,
+    Bar,
+    XAxis,
+    YAxis,
+    CartesianGrid,
+    Tooltip,
+    ResponsiveContainer,
+    PieChart,
+    Pie,
+  } from "recharts";
 
 export default function Dashboard() {
   const [stats, setStats] = useState(null);
@@ -59,6 +70,44 @@ export default function Dashboard() {
   <p>
     {stats.popularEvent?.total_likes} Likes
   </p>
+</div>
+<div className="grid md:grid-cols-2 gap-8 mt-10">
+
+<div className="bg-white p-6 rounded-2xl shadow">
+  <h2 className="text-xl font-bold mb-4">
+    📈 Likes Per Event
+  </h2>
+
+  <ResponsiveContainer width="100%" height={300}>
+    <BarChart data={stats.likesPerEvent}>
+      <CartesianGrid strokeDasharray="3 3" />
+      <XAxis dataKey="title" />
+      <YAxis />
+      <Tooltip />
+      <Bar dataKey="likes_count" />
+    </BarChart>
+  </ResponsiveContainer>
+</div>
+
+<div className="bg-white p-6 rounded-2xl shadow">
+  <h2 className="text-xl font-bold mb-4">
+    📸 Media Per Event
+  </h2>
+
+  <ResponsiveContainer width="100%" height={300}>
+    <PieChart>
+      <Pie
+        data={stats.mediaPerEvent}
+        dataKey="media_count"
+        nameKey="title"
+        outerRadius={100}
+        label
+      />
+      <Tooltip />
+    </PieChart>
+  </ResponsiveContainer>
+</div>
+
 </div>
       </div>
     </div>
