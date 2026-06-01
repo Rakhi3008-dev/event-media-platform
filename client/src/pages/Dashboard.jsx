@@ -49,6 +49,17 @@ export default function Dashboard() {
             {stats.totalComments}
           </p>
         </div>
+        <div className="bg-white p-6 rounded-2xl shadow">
+  <h2>🏆 Most Popular Event</h2>
+
+  <p className="font-bold">
+    {stats.popularEvent?.title}
+  </p>
+
+  <p>
+    {stats.popularEvent?.total_likes} Likes
+  </p>
+</div>
       </div>
     </div>
   );

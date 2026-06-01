@@ -19,11 +19,14 @@ export const getStats = async (req, res) => {
     );
 
     res.json({
-      totalEvents: totalEvents.rows[0].count,
-      totalMedia: totalMedia.rows[0].count,
-      totalLikes: totalLikes.rows[0].count,
-      totalComments: totalComments.rows[0].count,
-    });
+        totalEvents: totalEvents.rows[0].count,
+        totalMedia: totalMedia.rows[0].count,
+        totalLikes: totalLikes.rows[0].count,
+        totalComments: totalComments.rows[0].count,
+      
+        popularEvent:
+          popularEvent.rows[0] || null,
+      });
 
   } catch (error) {
     res.status(500).json({
@@ -31,3 +34,15 @@ export const getStats = async (req, res) => {
     });
   }
 };
+const popularEvent = await pool.query(`
+    SELECT
+      e.title,
+      COUNT(l.id) AS total_likes
+    FROM events e
+    LEFT JOIN media m ON m.event_id = e.id
+    LEFT JOIN likes l ON l.media_id = m.id
+    GROUP BY e.id, e.title
+    ORDER BY total_likes DESC
+    LIMIT 1
+  `);
+ 
