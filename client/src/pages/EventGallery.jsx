@@ -23,7 +23,7 @@ const [dateSearch, setDateSearch] =
   const fetchMedia = async () => {
     setLoading(true);
     const res = await API.get(
-        `/media/${id}?search=${search}&user=${userSearch}&date=${dateSearch}`
+        `/media/event/${id}?search=${search}&user=${userSearch}&date=${dateSearch}`
       );
     setMedia(res.data);
 
