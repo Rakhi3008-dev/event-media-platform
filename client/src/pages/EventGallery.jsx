@@ -28,8 +28,11 @@ const [dateSearch, setDateSearch] =
         `/media/event/${id}?search=${search}&user=${userSearch}&date=${dateSearch}`
       );
   
-      console.log("MEDIA RESPONSE:", res.data);
-      console.log("IS ARRAY?", Array.isArray(res.data));
+    
+
+console.log("MEDIA RESPONSE:", res.data);
+console.log("TYPE:", typeof res.data);
+console.log("IS ARRAY:", Array.isArray(res.data));
   
       setMedia(res.data);
     } catch (err) {
@@ -188,7 +191,7 @@ const [dateSearch, setDateSearch] =
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {console.log("MEDIA STATE:", media)}
+        
             {media.map((item) => (
               <div
                 key={item.id}
@@ -232,7 +235,8 @@ const [dateSearch, setDateSearch] =
 
                 <div className="p-4">
                   <div className="flex flex-wrap gap-2 mb-3">
-                    {(item.tags || []).map((tag) => (
+                  {Array.isArray(item.tags) &&
+                    item.tags.map((tag) => (
                       <span
                         key={tag}
                         className="
