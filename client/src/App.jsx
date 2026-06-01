@@ -8,6 +8,7 @@ import CreateEvent from "./pages/CreateEvent";
 import Navbar from "./components/Navbar";
 import ProtectedRoute from "./components/ProtectedRoute";
 import MyPhotos from "./pages/MyPhotos";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
   return (
@@ -26,10 +27,8 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route
-  path="/my-photos"
-  element={<MyPhotos />}
-/>
+        <Route path="/my-photos" element={<MyPhotos />} />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </BrowserRouter>
   );

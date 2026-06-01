@@ -32,6 +32,12 @@ export default function Navbar() {
         <Link to="/my-photos" className="hover:text-blue-600">
   My Photos
 </Link>
+<Link
+  to="/dashboard"
+  className="hover:text-blue-600"
+>
+  Dashboard
+</Link>
         {!token ? (
           <>
             <Link to="/login" className="hover:text-blue-600">
