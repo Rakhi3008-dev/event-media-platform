@@ -22,16 +22,22 @@ const [dateSearch, setDateSearch] =
 
   const fetchMedia = async () => {
     setLoading(true);
-    const res = await API.get(
+  
+    try {
+      const res = await API.get(
         `/media/event/${id}?search=${search}&user=${userSearch}&date=${dateSearch}`
       );
-
-console.log("MEDIA:", res.data);
-    setMedia(res.data);
-
-setLoading(false);
+  
+      console.log("MEDIA RESPONSE:", res.data);
+      console.log("IS ARRAY?", Array.isArray(res.data));
+  
+      setMedia(res.data);
+    } catch (err) {
+      console.error("FETCH MEDIA ERROR:", err);
+    }
+  
+    setLoading(false);
   };
-
   useEffect(() => {
     fetchMedia();
   }, [
