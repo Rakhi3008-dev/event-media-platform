@@ -25,6 +25,8 @@ const [dateSearch, setDateSearch] =
     const res = await API.get(
         `/media/event/${id}?search=${search}&user=${userSearch}&date=${dateSearch}`
       );
+
+console.log("MEDIA:", res.data);
     setMedia(res.data);
 
 setLoading(false);
@@ -180,6 +182,7 @@ setLoading(false);
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {console.log("MEDIA STATE:", media)}
             {media.map((item) => (
               <div
                 key={item.id}
@@ -272,7 +275,8 @@ setLoading(false);
   ⬇ Download
 </button>
 <div className="flex flex-wrap gap-2 mt-2">
-  {item.tags?.map((tag) => (
+{Array.isArray(item.tags) &&
+    item.tags.map((tag) => (
     <span
       key={tag}
       className="
