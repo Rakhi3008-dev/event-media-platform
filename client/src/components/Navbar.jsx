@@ -14,12 +14,12 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-white shadow-md px-8 py-4 flex justify-between items-center">
-      <Link to="/" className="text-2xl font-bold text-blue-600">
+    <nav className="bg-slate-900 shadow-md px-8 py-4 flex justify-between items-center">
+      <Link to="/" className="text-2xl font-bold text-blue-300">
         EventHub
       </Link>
 
-      <div className="flex gap-4 items-center">
+      <div className="flex gap-4 items-center text-white">
         <Link to="/" className="hover:text-blue-600">
           Events
         </Link>

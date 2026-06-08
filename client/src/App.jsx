@@ -9,6 +9,7 @@ import Navbar from "./components/Navbar";
 import ProtectedRoute from "./components/ProtectedRoute";
 import MyPhotos from "./pages/MyPhotos";
 import Dashboard from "./pages/Dashboard";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
         <Route path="/my-photos" element={<MyPhotos />} />
         <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 }
