@@ -99,12 +99,26 @@ export const deleteMedia = async (req, res) => {
   try {
     const { id } = req.params;
 
-    await pool.query("DELETE FROM media WHERE id=$1", [id]);
+    await pool.query(
+      "DELETE FROM likes WHERE media_id=$1",
+      [id]
+    );
+
+    await pool.query(
+      "DELETE FROM comments WHERE media_id=$1",
+      [id]
+    );
+
+    await pool.query(
+      "DELETE FROM media WHERE id=$1",
+      [id]
+    );
 
     res.json({
       success: true,
       message: "Media deleted",
     });
+
   } catch (error) {
     console.error(error);
 
@@ -113,7 +127,6 @@ export const deleteMedia = async (req, res) => {
     });
   }
 };
-
 export const downloadMedia = async (req, res) => {
   try {
     const { id } = req.params;
